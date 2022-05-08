@@ -1,11 +1,11 @@
-function Person(props) {
-  console.log(props);
+function Person({ name, age }) {
+  // console.log(props);
   // fragment
   return (
-    <>
-      <h2>{props.name}</h2>
-      <p>{props.age}</p>
-    </>
+    <div className="flex">
+      <h2>{name}</h2>
+      <p>{age}</p>
+    </div>
   );
 }
 
