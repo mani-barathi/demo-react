@@ -11,17 +11,15 @@ function InputForm({ appendPerson }) {
     setFname(e.target.value);
   }
 
-  // function handleLNameChange(e) {
-  //   setLname(e.target.value);
-  // }
-
+  // what we execept to happen
   /// person update
   //  useEffect run -> localstorage update
   //  navigate
 
+  // what actually happens
   /// person update
   //  navigate
-  //  useEffect run -> localstorage update
+  //  useEffect run -> localstorage update (this won't happen as we already moved to different page)
 
   function addPerson(event) {
     event.preventDefault();
