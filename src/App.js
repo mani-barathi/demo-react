@@ -1,52 +1,23 @@
-import { useState, useEffect } from "react";
 import "./styles/App.css";
-import Person from "./components/Person";
-import InputForm from "./components/InputForm";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Homepage from "./pages/Homepage";
+import PersonPage from "./pages/PersonPage";
+import SpecificPersonPage from "./pages/SpecificPersonPage";
+import Navbar from "./components/Navbar";
 
 function App() {
-  const [persons, setPersons] = useState(() => {
-    console.log("retreiving from local storage");
-    const defaultValue = localStorage.getItem("persons");
-    return defaultValue ? JSON.parse(defaultValue) : [];
-  });
-
-  // component get executed/recreate
-  // html content is populated in screen
-  // then useEffect is exeuted
-  useEffect(() => {
-    console.log("setting value to localstorage");
-    localStorage.setItem("persons", JSON.stringify(persons));
-  }, [persons]);
-
-  function appendPerson(newPerson) {
-    setPersons((prev) => {
-      newPerson.isAdult = newPerson.age >= 18 ? "Adult" : "child";
-      return [...prev, newPerson];
-    });
-  }
-
-  function deletePerson(personName) {
-    setPersons((prev) => {
-      return prev.filter((person) => person.name !== personName);
-    });
-  }
-
   return (
-    <div className="App">
-      <h1 className="text-teal"> Hello world</h1>
+    <BrowserRouter>
+      <Navbar />
 
-      <InputForm appendPerson={appendPerson} />
+      <Routes>
+        <Route path="/" element={<Homepage />} />
+        <Route path="/person" element={<PersonPage />} />
+        <Route path="/person/:fname/:lname" element={<SpecificPersonPage />} />
+      </Routes>
 
-      {persons.map((person, index) => (
-        <Person
-          name={person.name}
-          age={person.age}
-          isAdult={person.isAdult}
-          key={Math.random()}
-          deletePerson={deletePerson}
-        />
-      ))}
-    </div>
+      {/* <Footer /> */}
+    </BrowserRouter>
   );
 }
 
