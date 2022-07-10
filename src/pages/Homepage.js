@@ -22,7 +22,7 @@ function Homepage() {
     setPersons((prev) => {
       newPerson.isAdult = newPerson.age >= 18 ? "Adult" : "child";
       const newPersons = [...prev, newPerson];
-      // localStorage.setItem("persons", JSON.stringify(newPersons));
+      // localStorage.setItem("persons", JSON.stringify(newPerson));
       return newPersons;
     });
   }
