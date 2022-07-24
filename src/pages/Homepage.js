@@ -1,56 +1,28 @@
 import { useState, useEffect } from "react";
-import Person from "../components/Person";
-import InputForm from "../components/InputForm";
 import { Link } from "react-router-dom";
 
 function Homepage() {
-  const [persons, setPersons] = useState(() => {
-    // console.log("retreiving from local storage");
-    const defaultValue = localStorage.getItem("persons");
-    return defaultValue ? JSON.parse(defaultValue) : [];
-  });
+  const [data, setData] = useState([]);
 
-  // component get executed/recreate
-  // html content is populated in screen
-  // then useEffect is exeuted // sideeffect function
   useEffect(() => {
-    console.log("setting value to localstorage");
-    localStorage.setItem("persons", JSON.stringify(persons));
-  }, [persons]);
+    async function getData() {
+      // "http://localhost:3000manibharathi";
+      // fetch("manibarathi");
+      const res = await fetch("http://localhost:5000/api/data");
+      const resData = await res.json();
+      console.log(resData);
+      setData(resData.results);
+    }
 
-  function appendPerson(newPerson) {
-    setPersons((prev) => {
-      newPerson.isAdult = newPerson.age >= 18 ? "Adult" : "child";
-      const newPersons = [...prev, newPerson];
-      // localStorage.setItem("persons", JSON.stringify(newPerson));
-      return newPersons;
-    });
-  }
-
-  function deletePerson(personName) {
-    setPersons((prev) => {
-      return prev.filter((person) => person.name !== personName);
-    });
-  }
+    getData();
+  }, []);
 
   return (
-    <div className="App">
-      <h1 className="text-teal"> Hello world</h1>
-      <a href="/person"> Person Page a tag</a>
-
-      <br />
-      <Link to="/person"> Person Page using Link</Link>
-
-      <InputForm appendPerson={appendPerson} />
-
-      {persons.map((person, index) => (
-        <Person
-          name={person.name}
-          age={person.age}
-          isAdult={person.isAdult}
-          key={Math.random()}
-          deletePerson={deletePerson}
-        />
+    <div>
+      {data.map((d) => (
+        <Link key={d.id} to={`/data/${d.id}`} className="">
+          <h3>{d.title}</h3>
+        </Link>
       ))}
     </div>
   );

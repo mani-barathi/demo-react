@@ -7,6 +7,9 @@ function Navbar() {
       <Link to="/" className="link">
         Home
       </Link>
+      <Link to="/create" className="link">
+        Create
+      </Link>
       <Link to="/person" className="link">
         Person
       </Link>
